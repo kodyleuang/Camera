@@ -1,5 +1,6 @@
 #import the cozmo and image libraries
 import cozmo
+from cozmo import robot
 from cozmo.objects import LightCube1Id, LightCube2Id, LightCube3Id
 from PIL import Image
 
@@ -58,8 +59,10 @@ def cozmo_program(robot: cozmo.robot.Robot):
 		success = False
 	finally:
 		cube1.set_lights_off()
-		if (success):
-			robot.say_text("Thank you for your service.").wait_for_completed()
+		if success:
+			robot.say_text("I'm moving to the right.").wait_for_completed()
+			robot.turn_in_place(cozmo.util.degrees(-90)).wait_for_completed()
+			robot.drive_straight(cozmo.util.distance_mm(50), cozmo.util.speed_mmps(150)).wait_for_completed()
 		else:
 			robot.say_text("You didn't tap the cube properly.").wait_for_completed()
 		success = True
@@ -113,7 +116,7 @@ def cozmo_program(robot: cozmo.robot.Robot):
 		action = robot.pop_a_wheelie(cube, num_retries=2)
 		action.wait_for_completed()
 		
-	robot.say_text("This is awkward.  I didn't think this through.  Help me.").wait_for_completed()
+	robot.say_text("Oh, Please help me.").wait_for_completed()
 	
 	return
 
